@@ -3,15 +3,17 @@ version: '3.1'
 services:
 
   api:
-    container_name: 'my-aspnetcore-app-prod'
+    container_name: 'my-aspnetcore-app-dev'
     image: 'my-aspnetcore-app-dev'
-    mem_limit: 366m
     build:
       context: .
       dockerfile: Dockerfile.build
+    volumes:
+     - .:/app
+    entrypoint: ["sh", "./build-run-local.sh"] 
     environment: 
       - ASPNETCORE_URLS=https://*:80
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
      - "80:80"
     depends_on:
@@ -20,9 +22,8 @@ services:
       - my-aspnetcore-network
 
   postgres:
-    container_name: 'postgres-my-aspnetcore-app-prod'
+    container_name: 'postgres-my-aspnetcore-app-dev'
     image: postgres:9.6.3
-    mem_limit: 366m
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     environment:
@@ -33,7 +34,7 @@ services:
       - my-aspnetcore-network
 
 networks:
-  deficiencies-network:
+  my-aspnetcore-network:
     driver: bridge
 
 volumes:

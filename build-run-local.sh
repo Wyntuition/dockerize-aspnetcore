@@ -2,4 +2,4 @@
 set -e
 
 dotnet restore
-dotnet watch run
+dotnet run
