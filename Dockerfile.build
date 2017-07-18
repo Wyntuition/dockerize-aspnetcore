@@ -1,0 +1,9 @@
+FROM microsoft/aspnetcore-build:2.0.0-preview2
+
+EXPOSE 80/tcp
+ENV ASPNETCORE_URLS http://*:80
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+# copy files for building from current directory to target on image 
+COPY . /app/
+WORKDIR /app

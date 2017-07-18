@@ -1,0 +1,19 @@
+##### For building the app and running it locally ###################################################### 
+FROM microsoft/aspnetcore-build:2.0.0-preview2 as publish
+
+COPY . /publish/
+WORKDIR /publish
+
+RUN ["dotnet", "restore"]
+RUN ["dotnet", "build"]
+RUN dotnet publish --output ./out
+
+##### For running the app in production ###################################################### 
+FROM microsoft/aspnetcore:2.0.0-preview2
+WORKDIR /published
+COPY --from=publish /publish/out .
+
+EXPOSE 5000/tcp
+ENV ASPNETCORE_URLS http://*:5000
+
+ENTRYPOINT ["dotnet", "API.dll"]
