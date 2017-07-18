@@ -1,4 +1,4 @@
-##### For building the app and running it locally ###################################################### 
+##### For building ###################################################### 
 FROM microsoft/aspnetcore-build:2.0.0-preview2 as publish
 
 COPY . /publish/

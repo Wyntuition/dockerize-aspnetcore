@@ -3,17 +3,14 @@ version: '3.1'
 services:
 
   api:
-    container_name: 'my-aspnetcore-app-dev'
-    image: 'my-aspnetcore-app-dev'
+    container_name: 'my-aspnetcore-app-prod'
+    image: 'my-aspnetcore-app-prod'
     build:
       context: .
-      dockerfile: Dockerfile.build
-    volumes:
-     - .:/app
-    entrypoint: ["sh", "./build-run-local.sh"] 
+      dockerfile: Dockerfile.prod
     environment: 
-      - ASPNETCORE_URLS=https://*:80
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Production
     ports:
      - "80:80"
     depends_on:
@@ -22,7 +19,7 @@ services:
       - my-aspnetcore-network
 
   postgres:
-    container_name: 'postgres-my-aspnetcore-app-dev'
+    container_name: 'postgres-my-aspnetcore-app-prod'
     image: postgres:9.6.3
     volumes:
       - 'postgres:/var/lib/postgresql/data'
